@@ -32,6 +32,7 @@ class SMTPBase:
         encoding="utf-8",
         oauth2_file=None,
         soft_email_validation=True,
+        useralias=None,
         **kwargs
     ):
         self.log = get_logger()
@@ -46,6 +47,8 @@ class SMTPBase:
         elif user is None:
             user = find_user_home_path()
         self.user, self.useralias = make_addr_alias_user(user)
+        if useralias is not None:
+            self.useralias = useralias        
         if soft_email_validation:
             validate_email_with_regex(self.user)
         self.is_closed = None
